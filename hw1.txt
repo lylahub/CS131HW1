@@ -1,0 +1,80 @@
+Q1
+The `subset` function in OCaml uses recursion to check if list `a` is a subset of list `b`, adhering to OCaml's 
+functional programming style. Alternatives like iterative solutions and using set structures were considered but 
+rejected due to complexity and deviation from list-based operations. While this approach is concise and idiomatic, 
+it may struggle with large lists due to its O(n*m) complexity and risk of stack overflow in deep recursive calls, 
+making it suitable primarily for smaller datasets.
+
+Q2
+The `equal_sets` function in OCaml determines if two lists represent the same set by checking if 
+each list is a subset of the other, using the `subset` function. This approach utilizes logical 
+and functional clarity by employing an existing function, avoiding the need for additional complex operations 
+such as sorting or hash table conversions. However, the main limitation is its computational inefficiency for 
+large datasets due to the double invocation of the `subset` function, each with O(n*m) complexity, making it 
+suitable mainly for moderate-sized data.
+
+Q3
+The `set_union` function in OCaml effectively constructs the union of two lists, `a` and `b`, by recursively 
+appending elements from `a` to `b` if they are not already present, ensuring all elements from both lists are 
+included in the result. This method, while straightforward and easy to implement, involves appending elements 
+directly to `b`, potentially adding duplicate elements if `b` already contains some elements from `a`. It lacks
+a check for duplicates, which might be necessary for a true set operation, especially if maintaining a set with 
+unique elements is crucial. Thus, this implementation is best suited for scenarios where either list uniqueness 
+is managed externally or duplicates are acceptable. However, I am not sure whether we need to generate the list
+in what order since it was not specified in the question or shown in sample test cases.
+
+Q4
+The `set_all_union` function in OCaml utilizes `List.fold_left` to compute the union of a set of sets (`a`), 
+where each element of `a` is itself a list. This function effectively applies the previously defined `set_union` 
+to accumulate a single list representing the union of all contained sets, starting with an empty list. By 
+leveraging `fold_left` with `set_union`, it iteratively combines all nested lists into one, handling an arbitrary 
+number of sets within `a`. This approach is efficient for merging multiple sets but retains the limitations of 
+the `set_union` regarding potential duplicate elements if the `set_union` function does not inherently handle duplicates.
+
+Q5
+The function `self_member` is conceptually impossible to implement in OCaml due to type constraints inherent in the 
+language. In OCaml, for a set `s` to contain itself, `s` would need to be a list that includes itself as an element, 
+creating a type mismatch. Specifically, if `s` is of type `'a list`, then for `s` to contain itself, `s` would also 
+need to be of type `'a`, leading to a recursive type requirement that OCaml's type system does not support. This 
+restriction is due to OCaml's statically typed nature, which ensures type safety and prevents such recursive type 
+definitions to avoid inconsistencies and potential runtime errors.
+
+Q6
+The `computed_fixed_point` function in OCaml efficiently finds the fixed point of a function `f` starting from 
+an initial value `x`, using an equality predicate `eq` to determine when the fixed point is reached. The function 
+checks if the value `x` equals `f(x)` based on the `eq` predicate, and if they are equal, it returns `x` as the 
+fixed point; otherwise, it recursively applies `f` and checks again. This implementation is direct and effective, 
+but it assumes that `f` will eventually stabilize to a fixed point, as it does not handle cases where `f` 
+continuously changes without stabilizing, which could lead to infinite recursion or stack overflow errors in 
+practical scenarios where no fixed point exists.
+
+Q7
+The `computed_periodic_point` function in OCaml finds a periodic point for a function `f` with a set period `p` 
+starting from `x`, using an equality check `eq`. It uses a helper function `apply` to apply `f` `p` times to `x`. 
+If `x` matches the result after `p` applications, it returns `x` as the periodic point. Otherwise, it keeps applying 
+`f` to find the right point. This approach assumes that a periodic point exists and may result in endless loops if 
+it doesn't.
+
+Q8
+The `whileseq` function in OCaml generates the longest list starting from `x` where each subsequent element is 
+derived by applying a function `s` to the previous element, and all elements satisfy a condition `p`. The function 
+recursively constructs the list by appending `x` to the list result of applying `whileseq` to `s x`, only if `p x` 
+is true. If `p x` is false, it immediately returns an empty list. This mechanism ensures that the list contains 
+consecutive elements starting from `x` that all meet the condition `p` until one does not, effectively stopping the 
+sequence. This implementation is efficient for generating sequences under conditions that are eventually false, 
+avoiding infinite loops.
+
+Q9
+The `filter_blind_alleys` function in OCaml is designed to refine a grammar by removing blind-alley rules, 
+which are production rules that cannot derive a string consisting solely of terminal symbols. The solution 
+uses multiple helper functions to achieve this: it begins by identifying all symbols that can derive terminal 
+strings using `terminable_symbol_list`, which iteratively checks if the right-hand side (rhs) of each rule only 
+contains symbols that can derive terminals. This check is facilitated by `rhs_terminability`, which recursively 
+confirms that every symbol in the rhs is either a terminal or a nonterminal that can ultimately lead to terminals.
+
+Once the list of terminable symbols is established, the main function uses `final_list` to repeatedly apply 
+`rules_symbols` until no new terminable symbols are added, effectively finding a fixed point of symbols that 
+can derive terminals. The grammar is then filtered by `remove_rules`, which only retains rules where the rhs 
+is fully terminable. This method ensures that the output grammar has no blind alleys while preserving the order
+of the original rules. By processing the grammar in this manner, the function addresses the requirement of refining 
+grammars to remove unproductive rules efficiently while ensuring the grammar still generates the same language.
