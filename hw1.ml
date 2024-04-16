@@ -28,8 +28,7 @@ let rec set_union a b =
   | h :: t -> set_union t (h::b)
 
 
-(* 4. The function set_all_union a returns a list representing ∪[x ∈ a]x 
-Go through all elements and apply set_union to all element, use the built 
+(* 4. The function set_all_union a returns a list representing ∪[x ∈ a]x Go through all elements and apply set_union to all element, use the built 
 in function fold_left *)
 (* input:  a:'a list list
     output: 'a list
@@ -38,18 +37,12 @@ let set_all_union a =
   List.fold_left set_union [] a
 
 
-(* 5. Russell's Paradox involves asking whether a set is a member of itself. 
-Write a function self_member s that returns true iff the set represented by 
-s is a member of itself, and explain in a comment why your function is correct; 
-if it's not possible to write such a function in OCaml, explain why not in a comment. *)
+(* 5. Russell's Paradox involves asking whether a set is a member of itself. Write a function self_member s that returns true iff the set represented by s is a member of itself, and explain in a comment why your function is correct; if it's not possible to write such a function in OCaml, explain why not in a comment. *)
 
-(* This function is impossible to implement in OCaml because the type does match. For 
-example, for set s with type 'a, it would be to be list 'a to contain itself, which is  
-impossible to do in OCaml due to its type check *)
+(* This function is impossible to implement in OCaml because the type does match. For example, for set s with type 'a, it would be to be list 'a to contain itself, which is impossible to do in OCaml due to its type check *)
 
 
-(* 6. The function computed_fixed_point eq f x returns the computed fixed point for 
-f with respect to x, assuming that eq is the equality predicate for f's domain.*)
+(* 6. The function computed_fixed_point eq f x returns the computed fixed point for f with respect to x, assuming that eq is the equality predicate for f's domain.*)
 (* input:  eq: 'a -> 'a -> bool = <fun>
             f: 'a -> 'a = <fun> 
             x: 'a 
@@ -60,9 +53,7 @@ let rec computed_fixed_point eq f x =
   else computed_fixed_point eq f (f x)
 
 
-(* 7. The function computed_periodic_point eq f p x returns the computed periodic 
-point for f with period p and with respect to x, assuming that eq is the equality 
-predicate for f's domain. *)
+(* 7. The function computed_periodic_point eq f p x returns the computed periodic point for f with period p and with respect to x, assuming that eq is the equality predicate for f's domain. *)
 (* input:  eq: 'a -> 'a -> bool = <fun> 
             f: 'a -> 'a = <fun>
             p: int
@@ -78,8 +69,7 @@ let rec computed_periodic_point eq f p x =
   else computed_periodic_point eq f p (f x)
 
 
-(* 8. The function whileseq s p x returns the longest list [x; s x; s (s x); ...] 
-such that p e is true for every element e in the list. *)
+(* 8. The function whileseq s p x returns the longest list [x; s x; s (s x); ...] such that p e is true for every element e in the list. *)
 (* input:  s: 'a -> 'a = <fun> 
             p: 'a -> bool = <fun>
             x: 'a 
@@ -90,8 +80,7 @@ let rec whileseq s p x =
   else []
 
 
-(* 9. The function filter_blind_alleys g returns a copy of the grammar g with 
-all blind-alley rules removed. This function preserve the order of rules. *)
+(* 9. The function filter_blind_alleys g returns a copy of the grammar g with all blind-alley rules removed. This function preserve the order of rules. *)
 
 (* define type for symbol *)
 type ('nonterminal, 'terminal) symbol =
